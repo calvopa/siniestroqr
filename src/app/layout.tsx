@@ -1,0 +1,34 @@
+import type { Metadata } from 'next'
+import { Inter, JetBrains_Mono } from 'next/font/google'
+import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+})
+
+export const metadata: Metadata = {
+  title: 'SiniestroQR — Intercambio Digital de Datos en Accidentes',
+  description:
+    'Plataforma InsurTech argentina para digitalizar el intercambio de datos entre conductores tras un accidente de tránsito mediante códigos QR.',
+  keywords: ['siniestro', 'qr', 'seguros', 'accidente', 'datos', 'argentina'],
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="es" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
+    </html>
+  )
+}

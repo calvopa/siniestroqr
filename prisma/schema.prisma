@@ -1,0 +1,67 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Broker {
+  id         String      @id @default(cuid())
+  nombre     String
+  email      String      @unique
+  password   String
+  telefono   String?
+  createdAt  DateTime    @default(now())
+  vehiculos  Vehiculo[]
+  siniestros Siniestro[]
+}
+
+model Vehiculo {
+  id        String    @id @default(cuid())
+  patente   String    @unique
+  marca     String
+  modelo    String
+  anio      Int
+  broker    Broker    @relation(fields: [brokerId], references: [id])
+  brokerId  String
+  qrTokens  QRToken[]
+  createdAt DateTime  @default(now())
+}
+
+model QRToken {
+  id         String      @id @default(cuid())
+  token      String      @unique @default(cuid())
+  vehiculo   Vehiculo    @relation(fields: [vehiculoId], references: [id])
+  vehiculoId String
+  activo     Boolean     @default(true)
+  usos       Int         @default(0)
+  createdAt  DateTime    @default(now())
+  siniestros Siniestro[]
+}
+
+model Siniestro {
+  id               String   @id @default(cuid())
+  token            QRToken  @relation(fields: [tokenId], references: [id])
+  tokenId          String
+  broker           Broker   @relation(fields: [brokerId], references: [id])
+  brokerId         String
+  conductorNombre  String
+  conductorDni     String
+  conductorTel     String
+  conductorEmail   String?
+  patenteConductor String
+  companiaSeguros  String
+  nroPoliza        String?
+  fechaHora        DateTime @default(now())
+  latitud          Float?
+  longitud         Float?
+  descripcion      String?
+  ipOrigen         String?
+  userAgent        String?
+  hashDocumento    String?
+  estado           String   @default("PENDIENTE")
+  createdAt        DateTime @default(now())
+}
