@@ -57,13 +57,13 @@ export default function SiniestroTable({ siniestros }: SiniestroTableProps) {
   if (siniestros.length === 0) {
     return (
       <div className="text-center py-16 px-4">
-        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
           </svg>
         </div>
-        <p className="text-gray-400 font-medium">No hay siniestros registrados aún</p>
-        <p className="text-gray-300 text-sm mt-1">Los siniestros aparecerán aquí cuando conductores escaneen tus QRs</p>
+        <p className="text-gray-400 dark:text-gray-500 font-medium">No hay siniestros registrados aún</p>
+        <p className="text-gray-300 dark:text-gray-600 text-sm mt-1">Los siniestros aparecerán aquí cuando conductores escaneen tus QRs</p>
       </div>
     )
   }
@@ -71,13 +71,13 @@ export default function SiniestroTable({ siniestros }: SiniestroTableProps) {
   return (
     <div>
       {/* Filters */}
-      <div className="p-4 border-b border-gray-100 flex flex-wrap gap-3 items-center">
+      <div className="p-4 border-b border-gray-100 dark:border-gray-700 flex flex-wrap gap-3 items-center">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Buscar por nombre, DNI o patente..."
-          className="flex-1 min-w-48 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+          className="flex-1 min-w-48 text-sm border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent bg-white dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400"
         />
         <div className="flex gap-1 flex-wrap">
           {['ALL', 'PENDIENTE', 'EN_PROCESO', 'PROCESADO', 'CERRADO'].map((state) => (
@@ -87,7 +87,7 @@ export default function SiniestroTable({ siniestros }: SiniestroTableProps) {
               className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
                 filter === state
                   ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
               {state === 'ALL' ? 'Todos' : estadoLabel[state]}
@@ -99,11 +99,11 @@ export default function SiniestroTable({ siniestros }: SiniestroTableProps) {
       {/* Table */}
       <div className="overflow-x-auto">
         {filtered.length === 0 ? (
-          <p className="text-center text-gray-400 py-10">No hay resultados para esta búsqueda</p>
+          <p className="text-center text-gray-400 dark:text-gray-500 py-10">No hay resultados para esta búsqueda</p>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-gray-400 uppercase tracking-wider bg-gray-50">
+              <tr className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider bg-gray-50 dark:bg-gray-800/50">
                 <th className="px-6 py-3 text-left font-medium">Conductor</th>
                 <th className="px-6 py-3 text-left font-medium hidden md:table-cell">Patentes</th>
                 <th className="px-6 py-3 text-left font-medium hidden lg:table-cell">Seguro</th>
@@ -112,29 +112,29 @@ export default function SiniestroTable({ siniestros }: SiniestroTableProps) {
                 <th className="px-6 py-3 text-right font-medium">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
               {filtered.map((s) => (
-                <tr key={s.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                   <td className="px-6 py-4">
-                    <p className="font-medium text-gray-900">{s.conductorNombre}</p>
-                    <p className="text-xs text-gray-400">DNI {s.conductorDni}</p>
+                    <p className="font-medium text-gray-900 dark:text-gray-100">{s.conductorNombre}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">DNI {s.conductorDni}</p>
                   </td>
                   <td className="px-6 py-4 hidden md:table-cell">
-                    <p className="font-mono text-xs text-gray-600">
+                    <p className="font-mono text-xs text-gray-600 dark:text-gray-300">
                       Mi: {s.token.vehiculo.patente}
                     </p>
-                    <p className="font-mono text-xs text-gray-400">
+                    <p className="font-mono text-xs text-gray-400 dark:text-gray-500">
                       3ro: {s.patenteConductor}
                     </p>
                   </td>
                   <td className="px-6 py-4 hidden lg:table-cell">
-                    <p className="text-gray-600">{s.companiaSeguros}</p>
+                    <p className="text-gray-600 dark:text-gray-300">{s.companiaSeguros}</p>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-xs text-gray-600">
+                    <p className="text-xs text-gray-600 dark:text-gray-300">
                       {new Date(s.fechaHora).toLocaleDateString('es-AR')}
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-400 dark:text-gray-500">
                       {new Date(s.fechaHora).toLocaleTimeString('es-AR', {
                         hour: '2-digit',
                         minute: '2-digit',
@@ -149,7 +149,7 @@ export default function SiniestroTable({ siniestros }: SiniestroTableProps) {
                   <td className="px-6 py-4 text-right">
                     <Link
                       href={`/broker/siniestro/${s.id}`}
-                      className="inline-flex items-center gap-1 text-accent hover:text-primary text-xs font-medium transition-colors"
+                      className="inline-flex items-center gap-1 text-accent hover:text-primary dark:hover:text-blue-300 text-xs font-medium transition-colors"
                     >
                       Ver
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,7 +165,7 @@ export default function SiniestroTable({ siniestros }: SiniestroTableProps) {
       </div>
 
       {filtered.length > 0 && (
-        <div className="px-6 py-3 border-t border-gray-100 text-xs text-gray-400">
+        <div className="px-6 py-3 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-400 dark:text-gray-500">
           Mostrando {filtered.length} de {siniestros.length} siniestros
         </div>
       )}

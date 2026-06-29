@@ -24,11 +24,12 @@ services:
     container_name: siniestroqr_app
     restart: unless-stopped
     ports:
-      - "3100:3000"
+      - "3101:3000"
     environment:
       DATABASE_URL: postgresql://siniestroqr:secret@postgres:5432/siniestroqr
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       NEXTAUTH_URL: ${NEXTAUTH_URL}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
       NODE_ENV: production
     depends_on:
       postgres:

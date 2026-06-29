@@ -85,14 +85,14 @@ export default function QRDisplay({ vehiculo, token, qrUrl, usos }: QRDisplayPro
       <Card>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wider">Vehículo</p>
-            <h2 className="text-2xl font-black text-primary font-mono">{vehiculo.patente}</h2>
-            <p className="text-gray-600">
+            <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider">Vehículo</p>
+            <h2 className="text-2xl font-black text-primary dark:text-blue-300 font-mono">{vehiculo.patente}</h2>
+            <p className="text-gray-600 dark:text-gray-300">
               {vehiculo.marca} {vehiculo.modelo} {vehiculo.anio}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-gray-400">Usos del QR</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">Usos del QR</p>
             <p className="text-3xl font-black text-accent">{usos}</p>
           </div>
         </div>
@@ -101,16 +101,16 @@ export default function QRDisplay({ vehiculo, token, qrUrl, usos }: QRDisplayPro
       {/* QR Code */}
       <Card className="text-center print:shadow-none">
         <div className="mb-4">
-          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">
+          <h3 className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">
             Código QR para el vehículo
           </h3>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-400 dark:text-gray-500">
             Escanealo para registrar datos en caso de siniestro
           </p>
         </div>
 
         {loading ? (
-          <div className="w-[300px] h-[300px] flex items-center justify-center mx-auto bg-gray-50 rounded-xl">
+          <div className="w-[300px] h-[300px] flex items-center justify-center mx-auto bg-gray-50 dark:bg-gray-700 rounded-xl">
             <div className="animate-spin w-10 h-10 border-4 border-accent border-t-transparent rounded-full" />
           </div>
         ) : qrDataUrl ? (
@@ -125,31 +125,31 @@ export default function QRDisplay({ vehiculo, token, qrUrl, usos }: QRDisplayPro
             />
           </div>
         ) : (
-          <div className="w-[300px] h-[300px] flex items-center justify-center mx-auto bg-red-50 rounded-xl">
+          <div className="w-[300px] h-[300px] flex items-center justify-center mx-auto bg-red-50 dark:bg-red-900/20 rounded-xl">
             <p className="text-red-500 text-sm">Error al generar QR</p>
           </div>
         )}
 
         {/* Vehicle label under QR */}
-        <div className="mt-4 bg-surface rounded-xl p-3 max-w-sm mx-auto">
-          <p className="font-black text-primary font-mono text-xl">{vehiculo.patente}</p>
-          <p className="text-gray-600 text-sm">
+        <div className="mt-4 bg-surface dark:bg-gray-700 rounded-xl p-3 max-w-sm mx-auto">
+          <p className="font-black text-primary dark:text-blue-300 font-mono text-xl">{vehiculo.patente}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">
             {vehiculo.marca} {vehiculo.modelo} {vehiculo.anio}
           </p>
-          <p className="text-xs text-gray-400 mt-1">SiniestroQR — Escanear en caso de accidente</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">SiniestroQR — Escanear en caso de accidente</p>
         </div>
       </Card>
 
       {/* URL */}
       <Card>
-        <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">URL del QR</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">URL del QR</p>
         <div className="flex items-center gap-2">
-          <code className="flex-1 text-xs bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-700 break-all font-mono">
+          <code className="flex-1 text-xs bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-gray-700 dark:text-gray-300 break-all font-mono">
             {qrUrl}
           </code>
           <button
             onClick={handleCopyUrl}
-            className="flex-shrink-0 p-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex-shrink-0 p-2 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             title="Copiar URL"
           >
             {copied ? (
@@ -168,8 +168,8 @@ export default function QRDisplay({ vehiculo, token, qrUrl, usos }: QRDisplayPro
 
       {/* Token info */}
       <Card>
-        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Token</p>
-        <p className="font-mono text-xs text-gray-600 break-all">{token}</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">Token</p>
+        <p className="font-mono text-xs text-gray-600 dark:text-gray-400 break-all">{token}</p>
       </Card>
 
       {/* Actions */}
@@ -189,8 +189,8 @@ export default function QRDisplay({ vehiculo, token, qrUrl, usos }: QRDisplayPro
       </div>
 
       {/* Instructions */}
-      <Card className="bg-surface border-0">
-        <h3 className="text-sm font-bold text-gray-700 mb-2">Instrucciones de uso</h3>
+      <Card className="bg-surface dark:bg-gray-700/50 border-0">
+        <h3 className="text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">Instrucciones de uso</h3>
         <ul className="space-y-1.5">
           {[
             'Imprimí este QR y pegalo en el parabrisas o ventanilla de tu vehículo',
@@ -198,7 +198,7 @@ export default function QRDisplay({ vehiculo, token, qrUrl, usos }: QRDisplayPro
             'El sistema registrará los datos del siniestro automáticamente',
             'Recibirás la información en el panel de control',
           ].map((item, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
+            <li key={i} className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-300">
               <span className="flex-shrink-0 w-4 h-4 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold mt-0.5">
                 {i + 1}
               </span>

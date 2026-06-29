@@ -85,7 +85,7 @@ export default function SiniestroDetail({ siniestro }: SiniestroDetailProps) {
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-xs text-gray-400 mb-1">Estado actual</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Estado actual</p>
             <span className={`text-sm font-bold px-3 py-1.5 rounded-full ${estadoBadge[estado]}`}>
               {estado}
             </span>
@@ -96,7 +96,7 @@ export default function SiniestroDetail({ siniestro }: SiniestroDetailProps) {
                 key={s}
                 onClick={() => handleUpdateEstado(s)}
                 disabled={updating}
-                className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 font-medium text-gray-600"
+                className="text-xs px-3 py-1.5 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 font-medium text-gray-600 dark:text-gray-300"
               >
                 Marcar {s.replace('_', ' ')}
               </button>
@@ -125,60 +125,60 @@ export default function SiniestroDetail({ siniestro }: SiniestroDetailProps) {
       {/* Vehicles */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
-          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+          <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
             Vehículo Asegurado
           </h3>
           <div className="space-y-2">
             <div>
-              <p className="text-xs text-gray-400">Patente</p>
-              <p className="font-bold text-primary font-mono text-lg">{siniestro.token.vehiculo.patente}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Patente</p>
+              <p className="font-bold text-primary dark:text-blue-300 font-mono text-lg">{siniestro.token.vehiculo.patente}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400">Vehículo</p>
-              <p className="font-medium text-gray-700">
+              <p className="text-xs text-gray-400 dark:text-gray-500">Vehículo</p>
+              <p className="font-medium text-gray-700 dark:text-gray-300">
                 {siniestro.token.vehiculo.marca} {siniestro.token.vehiculo.modelo} {siniestro.token.vehiculo.anio}
               </p>
             </div>
-            <div className="pt-2 border-t border-gray-100">
-              <p className="text-xs text-gray-400">Aseguradora</p>
-              <p className="font-medium text-gray-700">{siniestro.broker.nombre}</p>
-              <p className="text-xs text-gray-500">{siniestro.broker.email}</p>
+            <div className="pt-2 border-t border-gray-100 dark:border-gray-700">
+              <p className="text-xs text-gray-400 dark:text-gray-500">Aseguradora</p>
+              <p className="font-medium text-gray-700 dark:text-gray-300">{siniestro.broker.nombre}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{siniestro.broker.email}</p>
             </div>
           </div>
         </Card>
 
         <Card>
-          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+          <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
             Conductor Tercero
           </h3>
           <div className="space-y-2">
             <div>
-              <p className="text-xs text-gray-400">Nombre</p>
-              <p className="font-bold text-gray-900">{siniestro.conductorNombre}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Nombre</p>
+              <p className="font-bold text-gray-900 dark:text-gray-100">{siniestro.conductorNombre}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400">DNI</p>
-              <p className="font-medium">{siniestro.conductorDni}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">DNI</p>
+              <p className="font-medium dark:text-gray-200">{siniestro.conductorDni}</p>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <p className="text-xs text-gray-400">Teléfono</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">Teléfono</p>
                 <a href={`tel:${siniestro.conductorTel}`} className="text-accent text-sm hover:underline">
                   {siniestro.conductorTel}
                 </a>
               </div>
               {siniestro.conductorEmail && (
                 <div>
-                  <p className="text-xs text-gray-400">Email</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">Email</p>
                   <a href={`mailto:${siniestro.conductorEmail}`} className="text-accent text-sm hover:underline break-all">
                     {siniestro.conductorEmail}
                   </a>
                 </div>
               )}
             </div>
-            <div className="pt-2 border-t border-gray-100">
-              <p className="text-xs text-gray-400">Patente de su vehículo</p>
-              <p className="font-bold font-mono text-primary">{siniestro.patenteConductor}</p>
+            <div className="pt-2 border-t border-gray-100 dark:border-gray-700">
+              <p className="text-xs text-gray-400 dark:text-gray-500">Patente de su vehículo</p>
+              <p className="font-bold font-mono text-primary dark:text-blue-300">{siniestro.patenteConductor}</p>
             </div>
           </div>
         </Card>
@@ -186,17 +186,17 @@ export default function SiniestroDetail({ siniestro }: SiniestroDetailProps) {
 
       {/* Insurance */}
       <Card>
-        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
           Seguro del Tercero
         </h3>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-xs text-gray-400">Compañía</p>
-            <p className="font-medium text-gray-700">{siniestro.companiaSeguros}</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">Compañía</p>
+            <p className="font-medium text-gray-700 dark:text-gray-300">{siniestro.companiaSeguros}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-400">Nro. de póliza</p>
-            <p className="font-medium text-gray-700">{siniestro.nroPoliza || '—'}</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">Nro. de póliza</p>
+            <p className="font-medium text-gray-700 dark:text-gray-300">{siniestro.nroPoliza || '—'}</p>
           </div>
         </div>
       </Card>
@@ -204,22 +204,22 @@ export default function SiniestroDetail({ siniestro }: SiniestroDetailProps) {
       {/* Description */}
       {siniestro.descripcion && (
         <Card>
-          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+          <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
             Descripción del siniestro
           </h3>
-          <p className="text-sm text-gray-700 leading-relaxed">{siniestro.descripcion}</p>
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{siniestro.descripcion}</p>
         </Card>
       )}
 
       {/* Location and metadata */}
       <Card>
-        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3">
           Metadata técnica
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
-            <p className="text-xs text-gray-400">Fecha y hora</p>
-            <p className="text-sm font-medium">
+            <p className="text-xs text-gray-400 dark:text-gray-500">Fecha y hora</p>
+            <p className="text-sm font-medium dark:text-gray-200">
               {new Date(siniestro.fechaHora).toLocaleString('es-AR', {
                 timeZone: 'America/Argentina/Buenos_Aires',
                 day: '2-digit',
@@ -232,7 +232,7 @@ export default function SiniestroDetail({ siniestro }: SiniestroDetailProps) {
           </div>
           {siniestro.latitud && siniestro.longitud && (
             <div>
-              <p className="text-xs text-gray-400">Ubicación GPS</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Ubicación GPS</p>
               <a
                 href={`https://maps.google.com/?q=${siniestro.latitud},${siniestro.longitud}`}
                 target="_blank"
@@ -244,13 +244,13 @@ export default function SiniestroDetail({ siniestro }: SiniestroDetailProps) {
             </div>
           )}
           <div>
-            <p className="text-xs text-gray-400">IP origen</p>
-            <p className="text-sm font-mono">{siniestro.ipOrigen || '—'}</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500">IP origen</p>
+            <p className="text-sm font-mono dark:text-gray-300">{siniestro.ipOrigen || '—'}</p>
           </div>
           {siniestro.hashDocumento && (
             <div className="md:col-span-2">
-              <p className="text-xs text-gray-400 mb-1">Hash SHA-256</p>
-              <p className="text-xs font-mono text-gray-600 break-all bg-gray-50 p-2 rounded">
+              <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Hash SHA-256</p>
+              <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all bg-gray-50 dark:bg-gray-700 p-2 rounded">
                 {siniestro.hashDocumento}
               </p>
             </div>

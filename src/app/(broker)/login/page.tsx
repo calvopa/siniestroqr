@@ -123,10 +123,10 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 p-4 bg-surface rounded-lg">
-            <p className="text-xs text-gray-500 font-medium mb-2">Credenciales de demo:</p>
-            <p className="text-xs text-gray-600 font-mono">demo@seguros.com</p>
-            <p className="text-xs text-gray-600 font-mono">demo1234</p>
+          <div className="mt-6 p-4 bg-surface dark:bg-gray-700 rounded-lg">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mb-2">Credenciales de demo:</p>
+            <p className="text-xs text-gray-600 dark:text-gray-300 font-mono">demo@seguros.com</p>
+            <p className="text-xs text-gray-600 dark:text-gray-300 font-mono">demo1234</p>
           </div>
         </Card>
 

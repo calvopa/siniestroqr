@@ -1,6 +1,8 @@
+import ChatWidget from '@/components/ui/ChatWidget'
+
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-surface to-white">
+    <div className="min-h-screen bg-gradient-to-br from-surface to-white dark:from-gray-900 dark:to-gray-800">
       <header className="bg-primary text-white py-3 px-4 shadow-lg">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -15,9 +17,10 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         </div>
       </header>
       <main className="py-6 px-4">{children}</main>
-      <footer className="text-center text-xs text-gray-400 py-4 border-t border-gray-100 mt-auto">
+      <footer className="text-center text-xs text-gray-400 dark:text-gray-500 py-4 border-t border-gray-100 dark:border-gray-700 mt-auto">
         <p>SiniestroQR © {new Date().getFullYear()} — Plataforma InsurTech Argentina</p>
       </footer>
+      <ChatWidget />
     </div>
   )
 }
