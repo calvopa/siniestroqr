@@ -16,25 +16,40 @@ export const authOptions: AuthOptions = {
           throw new Error('Email y contraseña son requeridos')
         }
 
+        // Try broker first
         const broker = await prisma.broker.findUnique({
           where: { email: credentials.email },
         })
 
-        if (!broker) {
-          throw new Error('Usuario no encontrado')
+        if (broker) {
+          const passwordMatch = await bcrypt.compare(credentials.password, broker.password)
+          if (!passwordMatch) throw new Error('Contraseña incorrecta')
+          return {
+            id: broker.id,
+            name: broker.nombre,
+            email: broker.email,
+            role: 'BROKER' as const,
+          }
         }
 
-        const passwordMatch = await bcrypt.compare(credentials.password, broker.password)
+        // Try insurer user
+        const insurerUser = await prisma.insurerUser.findUnique({
+          where: { email: credentials.email },
+        })
 
-        if (!passwordMatch) {
-          throw new Error('Contraseña incorrecta')
+        if (insurerUser) {
+          const passwordMatch = await bcrypt.compare(credentials.password, insurerUser.password)
+          if (!passwordMatch) throw new Error('Contraseña incorrecta')
+          return {
+            id: insurerUser.id,
+            name: insurerUser.nombre,
+            email: insurerUser.email,
+            role: 'ASEGURADORA' as const,
+            insurerId: insurerUser.insurerId,
+          }
         }
 
-        return {
-          id: broker.id,
-          name: broker.nombre,
-          email: broker.email,
-        }
+        throw new Error('Usuario no encontrado')
       },
     }),
   ],
@@ -44,6 +59,8 @@ export const authOptions: AuthOptions = {
         token.id = user.id
         token.name = user.name
         token.email = user.email
+        token.role = (user as any).role
+        token.insurerId = (user as any).insurerId
       }
       return token
     },
@@ -52,6 +69,8 @@ export const authOptions: AuthOptions = {
         session.user.id = token.id as string
         session.user.name = token.name
         session.user.email = token.email
+        session.user.role = token.role
+        session.user.insurerId = token.insurerId
       }
       return session
     },

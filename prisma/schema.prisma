@@ -8,6 +8,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ─── Actores existentes ───────────────────────────────────────────────────────
+
 model Broker {
   id         String      @id @default(cuid())
   nombre     String
@@ -42,26 +44,104 @@ model QRToken {
   siniestros Siniestro[]
 }
 
+// ─── Siniestro ────────────────────────────────────────────────────────────────
+
 model Siniestro {
-  id               String   @id @default(cuid())
-  token            QRToken  @relation(fields: [tokenId], references: [id])
+  id               String             @id @default(cuid())
+  token            QRToken            @relation(fields: [tokenId], references: [id])
   tokenId          String
-  broker           Broker   @relation(fields: [brokerId], references: [id])
+  broker           Broker             @relation(fields: [brokerId], references: [id])
   brokerId         String
+  // Conductor tercero
   conductorNombre  String
   conductorDni     String
   conductorTel     String
   conductorEmail   String?
   patenteConductor String
+  // Seguro del conductor (texto libre original — nunca eliminar, sirve de fallback)
   companiaSeguros  String
   nroPoliza        String?
-  fechaHora        DateTime @default(now())
+  // Vínculo normalizado con Insurer (nullable hasta que corra la migración)
+  insurerId        String?
+  insurer          Insurer?           @relation(fields: [insurerId], references: [id])
+  // Geolocalización
+  fechaHora        DateTime           @default(now())
   latitud          Float?
   longitud         Float?
+  geoAccuracy      Float?
+  geoCapturedAt    DateTime?
+  // Contenido
   descripcion      String?
+  // Metadatos técnicos
   ipOrigen         String?
   userAgent        String?
   hashDocumento    String?
-  estado           String   @default("PENDIENTE")
-  createdAt        DateTime @default(now())
+  estado           String             @default("PENDIENTE")
+  createdAt        DateTime           @default(now())
+  // Relaciones nuevas
+  photos           SiniestroPhoto[]
+  accessLogs       InsurerAccessLog[]
+}
+
+// ─── Aseguradoras ─────────────────────────────────────────────────────────────
+
+model Insurer {
+  id         String             @id @default(cuid())
+  name       String             @unique   // "Sancor Seguros"
+  slug       String             @unique   // "sancor-seguros"
+  active     Boolean            @default(true)
+  createdAt  DateTime           @default(now())
+  users      InsurerUser[]
+  apiKeys    InsurerApiKey[]
+  siniestros Siniestro[]
+  accessLogs InsurerAccessLog[]
+}
+
+model InsurerUser {
+  id        String   @id @default(cuid())
+  nombre    String
+  email     String   @unique
+  password  String
+  insurerId String
+  insurer   Insurer  @relation(fields: [insurerId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model InsurerApiKey {
+  id         String    @id @default(cuid())
+  insurerId  String
+  insurer    Insurer   @relation(fields: [insurerId], references: [id])
+  hashedKey  String    @unique   // SHA-256 hex — nunca se guarda la key en claro
+  label      String?
+  revoked    Boolean   @default(false)
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+}
+
+// ─── Fotos ────────────────────────────────────────────────────────────────────
+
+model SiniestroPhoto {
+  id          String    @id @default(cuid())
+  siniestroId String
+  siniestro   Siniestro @relation(fields: [siniestroId], references: [id])
+  storageKey  String    // path relativo en volumen — NUNCA URL pública
+  mimeType    String
+  takenAt     DateTime?
+  latitude    Float?
+  longitude   Float?
+  createdAt   DateTime  @default(now())
+}
+
+// ─── Audit log ────────────────────────────────────────────────────────────────
+
+model InsurerAccessLog {
+  id          String    @id @default(cuid())
+  insurerId   String
+  insurer     Insurer   @relation(fields: [insurerId], references: [id])
+  siniestroId String
+  siniestro   Siniestro @relation(fields: [siniestroId], references: [id])
+  via         String    // "PORTAL" | "API"
+  userId      String?   // InsurerUser.id si via PORTAL
+  apiKeyId    String?   // InsurerApiKey.id si via API
+  createdAt   DateTime  @default(now())
 }

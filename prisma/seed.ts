@@ -123,10 +123,61 @@ async function main() {
   })
 
   console.log('Sample siniestros created')
+
+  // Seed Insurers
+  const sancor = await prisma.insurer.upsert({
+    where: { slug: 'sancor-seguros' },
+    update: {},
+    create: {
+      name: 'Sancor Seguros',
+      slug: 'sancor-seguros',
+    },
+  })
+
+  const laSegunda = await prisma.insurer.upsert({
+    where: { slug: 'la-segunda' },
+    update: {},
+    create: {
+      name: 'La Segunda',
+      slug: 'la-segunda',
+    },
+  })
+
+  console.log('Insurers created:', sancor.name, laSegunda.name)
+
+  const hashedDemoPassword = await bcrypt.hash('demo1234', 12)
+
+  await prisma.insurerUser.upsert({
+    where: { email: 'sancor@seguros.com' },
+    update: {},
+    create: {
+      nombre: 'Sancor Seguros Demo',
+      email: 'sancor@seguros.com',
+      password: hashedDemoPassword,
+      insurerId: sancor.id,
+    },
+  })
+
+  await prisma.insurerUser.upsert({
+    where: { email: 'lasegunda@seguros.com' },
+    update: {},
+    create: {
+      nombre: 'La Segunda Demo',
+      email: 'lasegunda@seguros.com',
+      password: hashedDemoPassword,
+      insurerId: laSegunda.id,
+    },
+  })
+
+  console.log('InsurerUsers created: sancor@seguros.com, lasegunda@seguros.com')
+
   console.log('\n=== SEED COMPLETED ===')
   console.log('Login credentials:')
   console.log('  Email: demo@seguros.com')
   console.log('  Password: demo1234')
+  console.log('\nAseguradora credentials:')
+  console.log('  Email: sancor@seguros.com / Password: demo1234')
+  console.log('  Email: lasegunda@seguros.com / Password: demo1234')
   console.log('\nQR Token URLs (for testing):')
   console.log(`  http://localhost:3000/siniestro/${token1.token}`)
   console.log(`  http://localhost:3000/siniestro/${token2.token}`)

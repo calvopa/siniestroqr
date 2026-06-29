@@ -17,6 +17,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (status === 'authenticated') {
+      // Middleware will redirect ASEGURADORA users from /dashboard to /aseguradora
       router.push('/dashboard')
     }
   }, [status, router])
